@@ -415,7 +415,7 @@ class RemoteBASE(object):
         from_infos,
         to_infos,
         no_progress_bar=False,
-        name=None,
+        names=None,
         resume=False,
     ):
         raise RemoteActionNotImplemented("download", self.scheme)

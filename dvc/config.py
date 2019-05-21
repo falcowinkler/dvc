@@ -221,6 +221,9 @@ class Config(object):  # pylint: disable=too-many-instance-attributes
         Optional(SECTION_GCP_PROJECTNAME): str,
     }
 
+    SECTION_GDRIVE_SCOPES = "gdrive_scopes"
+    SECTION_GDRIVE_CREDENTIALPATH = SECTION_AWS_CREDENTIALPATH
+
     # backward compatibility
     SECTION_LOCAL = "local"
     SECTION_LOCAL_STORAGEPATH = SECTION_AWS_STORAGEPATH
@@ -250,6 +253,7 @@ class Config(object):  # pylint: disable=too-many-instance-attributes
         Optional(SECTION_AWS_LIST_OBJECTS, default=False): BOOL_SCHEMA,
         Optional(SECTION_AWS_USE_SSL, default=True): BOOL_SCHEMA,
         Optional(SECTION_GCP_PROJECTNAME): str,
+        Optional(SECTION_GDRIVE_SCOPES): str,
         Optional(SECTION_CACHE_TYPE): SECTION_CACHE_TYPE_SCHEMA,
         Optional(SECTION_CACHE_PROTECTED, default=False): BOOL_SCHEMA,
         Optional(SECTION_REMOTE_USER): str,
@@ -273,11 +277,16 @@ class Config(object):  # pylint: disable=too-many-instance-attributes
         Optional(SECTION_STATE_ROW_CLEANUP_QUOTA): And(Use(int), is_percent),
     }
 
+    SECTION_OAUTH2 = "oauth2"
+    SECTION_OAUTH2_FLOW_RUNNER = "flow_runner"
+    SECTION_OAUTH2_SCHEMA = {Optional(SECTION_OAUTH2_FLOW_RUNNER): str}
+
     SCHEMA = {
         Optional(SECTION_CORE, default={}): SECTION_CORE_SCHEMA,
         Optional(Regex(SECTION_REMOTE_REGEX)): SECTION_REMOTE_SCHEMA,
         Optional(SECTION_CACHE, default={}): SECTION_CACHE_SCHEMA,
         Optional(SECTION_STATE, default={}): SECTION_STATE_SCHEMA,
+        Optional(SECTION_OAUTH2, default={}): SECTION_OAUTH2_SCHEMA,
         # backward compatibility
         Optional(SECTION_AWS, default={}): SECTION_AWS_SCHEMA,
         Optional(SECTION_GCP, default={}): SECTION_GCP_SCHEMA,

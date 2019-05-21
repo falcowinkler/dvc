@@ -13,6 +13,10 @@ environment:
     secure: 96fJ3r2i2GohbXHwnSs5N4EplQ7q8YmLpPWM0AC+f4s=
   CODECOV_TOKEN:
     secure: XN4jRtmGE5Bqg8pPZkwNs7kn3UEI73Rkldqc0MGsQISZBm5TNJZOPofDMc1QnUsf
+  OAUTH2_TOKEN_FILE_KEY:
+    secure: cL2KgINnnWhfNVy+lEI/QmA31cKwYojGhFRFs1x0PAkA5QRvZxYTlBX+XpjQYF8k2A6tqYMUWztZt0dXlMKqLVf5aCtg7z2I5AWW5dhGeTY=
+  OAUTH2_TOKEN_FILE_IV:
+    secure: 6lKZF5KNCpP80lFZ7a8yFkvcwllt2eoEC7LpSS5Mlwg4ilFsjFVSm+zw2GqA7NKw
   AZURE_STORAGE_CONTAINER_NAME: appveyor-tests
   AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;
   OSS_ENDPOINT: localhost:50004
@@ -52,6 +56,7 @@ before_test:
   - aws configure set aws_secret_access_key "%aws_secret_access_key%"
   - aws configure set region us-east-2
   - openssl enc -d -aes-256-cbc -md md5 -k "%GCP_CREDS%" -in scripts\ci\gcp-creds.json.enc -out scripts\ci\gcp-creds.json & exit 0
+  - python scripts\ci\decrypt_gdrive_oauth2.py
   - pip install -e .[tests]
 
 test_script:
