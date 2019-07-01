@@ -82,12 +82,12 @@ class RemoteHDFS(RemoteBASE):
         dname = posixpath.dirname(to_info.path)
         self.hadoop_fs("mkdir -p {}".format(dname), user=to_info.user)
         self.hadoop_fs(
-            "cp -rf {} {}".format(from_info.path, to_info.path),
+            "cp -f {} {}".format(from_info.path, to_info.path),
             user=to_info.user,
         )
 
     def rm(self, path_info):
-        self.hadoop_fs("rm -rf {}".format(path_info.path), user=path_info.user)
+        self.hadoop_fs("rm -r -f {}".format(path_info.path), user=path_info.user)
 
     def remove(self, path_info):
         if path_info.scheme != "hdfs":
