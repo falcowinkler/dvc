@@ -70,7 +70,7 @@ class RemoteHDFS(RemoteBASE):
         if self.is_dir(path_info):
             stdout = self.hadoop_fs(
                 "hadoop fs -ls -R {} | grep -oE '(\/.+?)' | xargs -L1 hadoop fs -checksum".format(path_info.path))
-            return hashlib.md5(stdout).hexdigest()
+            return hashlib.md5(stdout).hexdigest() + ".dir"
         regex = r".*\t.*\t(?P<checksum>.*)"
         stdout = self.hadoop_fs(
             "checksum {}".format(path_info.path), user=path_info.user
