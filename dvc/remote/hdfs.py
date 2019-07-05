@@ -68,8 +68,7 @@ class RemoteHDFS(RemoteBASE):
 
     def get_file_checksum(self, path_info):
         if self.is_dir(path_info):
-            stdout = self.hadoop_fs(
-                "hadoop fs -ls -R {} | grep -oE '(\/.+?)' | xargs -L1 hadoop fs -checksum".format(path_info.path))
+            stdout = self.hadoop_fs("ls -R {} | grep -oE '(\/.+?)' | xargs -L1 hadoop fs -checksum".format(path_info.path))
             return hashlib.md5(stdout.encode("utf-8")).hexdigest() + ".dir"
         regex = r".*\t.*\t(?P<checksum>.*)"
         stdout = self.hadoop_fs(
